@@ -1,4 +1,4 @@
-# Lab-2: Design Patterns
+# Lab-2: Creational Patterns
 
 This repository contains implementations of the following design patterns:
 * [**Factory Method**](./FactoryMethod), includes [**diagram**](./FactoryMethod/factory-method_diagram.png)
