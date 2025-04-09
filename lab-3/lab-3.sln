@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter", "Adapter\Adapter.csproj", "{932E88C6-94C5-4EEE-A656-F62CA9653A66}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Decorator", "Decorator\Decorator.csproj", "{8198B225-A196-44B0-BFA3-8FEFC59366FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{932E88C6-94C5-4EEE-A656-F62CA9653A66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{932E88C6-94C5-4EEE-A656-F62CA9653A66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{932E88C6-94C5-4EEE-A656-F62CA9653A66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8198B225-A196-44B0-BFA3-8FEFC59366FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8198B225-A196-44B0-BFA3-8FEFC59366FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8198B225-A196-44B0-BFA3-8FEFC59366FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8198B225-A196-44B0-BFA3-8FEFC59366FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
