@@ -1,6 +1,0 @@
-[LOG] 2025-04-09 18:49:26: Program start.
-[WARN] 2025-04-09 18:49:26: Some warning.
-[ERROR] 2025-04-09 18:49:26: Some error.
-[LOG] 2025-04-09 21:44:02: Program start.
-[WARN] 2025-04-09 21:44:02: Some warning.
-[ERROR] 2025-04-09 21:44:02: Some error.

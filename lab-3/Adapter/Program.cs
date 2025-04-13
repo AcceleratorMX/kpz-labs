@@ -3,7 +3,7 @@ using Adapter.Interfaces;
 
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-var logFilePath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "log.txt"));
+var logFilePath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "logs", "log.txt"));
 
 var consoleLogger = new Logger();
 var fileWriter = new FileWriter(logFilePath);
