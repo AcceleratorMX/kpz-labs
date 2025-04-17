@@ -1,7 +1,8 @@
 ﻿using Mediator;
 
-var commandCentre = CommandCentre.Initialize(
+var commandCentre = new CommandCentre(
     [
+        new Runway(),
         new Runway(),
         new Runway(),
     ]

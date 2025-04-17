@@ -1,21 +1,19 @@
-﻿using Mediator.Enums;
-using Mediator.Interfaces;
+﻿namespace Mediator;
 
-namespace Mediator;
-
-public class Aircraft(string name, IAirportMediator mediator)
+public class Aircraft(string name, ICommandCentre commandCentre)
 {
     public string Name { get; } = name;
     public bool IsTakingOff { get; set; } =  true;
+
     public void RequestLanding()
     {
         Console.WriteLine($"\nAircraft {Name} requesting landing...");
-        mediator.Notify(this, nameof(Event.LandingRequest));
+        commandCentre.HandleLandingRequest(this);
     }
 
     public void RequestTakeOff()
     {
         Console.WriteLine($"\nAircraft {Name} requesting takeoff...");
-        mediator.Notify(this, nameof(Event.TakeOffRequest));
+        commandCentre.HandleTakeOffRequest(this);
     }
 }
