@@ -3,8 +3,18 @@
 var header = new LightElementNode("h1", "block", "closing", ["header"]);
 header.AddChild(new LightTextNode("Welcome to LightHTML!"));
 
+header.AddEventListener("mouseover", (sender, e) =>
+{
+    Console.WriteLine($"Mouse cursor is over the header! Text: \"{sender.Children.OfType<LightTextNode>().FirstOrDefault()?.OuterHtml}\"");
+});
+
 var paragraph = new LightElementNode("p", "block", "closing", ["text"]);
 paragraph.AddChild(new LightTextNode("Lorem ipsum dolor sit amet."));
+
+paragraph.AddEventListener("click", (sender, e) =>
+{
+    Console.WriteLine($"Paragraph is clicked! Text: \"{sender.Children.OfType<LightTextNode>().FirstOrDefault()?.OuterHtml}\"");
+});
 
 var list = new LightElementNode("ul", "block", "closing", ["list"]);
 
@@ -21,6 +31,11 @@ list.AddChild(item1);
 list.AddChild(item2);
 list.AddChild(item3);
 
+item2.AddEventListener("click", (sender, e) =>
+{
+    Console.WriteLine($"Second list item was clicked! Text: \"{sender.Children.OfType<LightTextNode>().FirstOrDefault()?.OuterHtml}\"");
+});
+
 var image = new LightElementNode("img", "inline", "self-closing", ["image"]);
 
 var page = new LightElementNode("div", "block", "closing", ["container"]);
@@ -34,6 +49,16 @@ Console.WriteLine(page.OuterHtml);
 
 Console.WriteLine("\n=== InnerHTML ===");
 Console.WriteLine(page.InnerHtml);
+
+Console.WriteLine("\n=== Demonstrating Events ===");
+Console.WriteLine("Simulating 'click' event on the paragraph:");
+paragraph.DispatchEvent("click", EventArgs.Empty);
+
+Console.WriteLine("\nSimulating 'click' event on the second list item:");
+item2.DispatchEvent("click", EventArgs.Empty);
+
+Console.WriteLine("\nSimulating 'mouseover' event on the header:");
+header.DispatchEvent("mouseover", EventArgs.Empty);
 
 Console.WriteLine("\n=== Full Page Structure ===");
 PrintNode(page, 0);
