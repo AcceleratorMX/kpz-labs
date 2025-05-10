@@ -1,5 +1,6 @@
 ﻿using Composite.Iterator;
 using Composite.State;
+using Composite.Visitor;
 
 namespace Composite;
 
@@ -104,5 +105,14 @@ public class LightElementNode : LightNode
     {
         State = state;
         Console.WriteLine($"State of <{TagName}> changed to {state.GetType().Name}.");
+    }
+    
+    public override void Accept(ILightNodeVisitor visitor)
+    {
+        visitor.Visit(this);
+        foreach (var child in Children)
+        {
+            child.Accept(visitor);
+        }
     }
 }
