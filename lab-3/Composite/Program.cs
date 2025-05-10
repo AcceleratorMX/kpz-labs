@@ -1,6 +1,7 @@
 ﻿using Composite;
 using Composite.Command;
 using Composite.State;
+using Composite.Visitor;
 
 var header = new LightElementNode("h1", "block", "closing", ["header"]);
 header.AddChild(new LightTextNode("Welcome to LightHTML!"));
@@ -75,16 +76,21 @@ page.AddChild(image);
 // Console.WriteLine("\n=== After Visible State ===");
 // Console.WriteLine(page.OuterHtml);
 
-var commandManager = new CommandManager();
-var newParagraph = new LightTextNode("New paragraph content");
-var addCommand = new AddChildCommand(page, newParagraph);
-commandManager.ExecuteCommand(addCommand);
-Console.WriteLine("\n=== After Adding Paragraph ===");
-Console.WriteLine(page.OuterHtml);
+// var commandManager = new CommandManager();
+// var newParagraph = new LightTextNode("New paragraph content");
+// var addCommand = new AddChildCommand(page, newParagraph);
+// commandManager.ExecuteCommand(addCommand);
+// Console.WriteLine("\n=== After Adding Paragraph ===");
+// Console.WriteLine(page.OuterHtml);
+//
+// commandManager.UndoLastCommand();
+// Console.WriteLine("\n=== After Undo ===");
+// Console.WriteLine(page.OuterHtml);
 
-commandManager.UndoLastCommand();
-Console.WriteLine("\n=== After Undo ===");
-Console.WriteLine(page.OuterHtml);
+var counter = new NodeCounterVisitor();
+page.Accept(counter);
+Console.WriteLine($"\n=== Node Count ===");
+Console.WriteLine($"Elements: {counter.ElementCount}, Text Nodes: {counter.TextCount}");
 
 // Console.WriteLine("\n=== Page rendering ===");
 // var renderedPage = page.Render();

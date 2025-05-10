@@ -1,4 +1,6 @@
-﻿namespace Composite;
+﻿using Composite.Visitor;
+
+namespace Composite;
 
 public class LightTextNode : LightNode
 {
@@ -34,4 +36,9 @@ public class LightTextNode : LightNode
     }
 
     public override List<LightNode> GetChildren() => [];
+    
+    public override void Accept(ILightNodeVisitor visitor)
+    {
+        visitor.Visit(this);
+    }
 }
