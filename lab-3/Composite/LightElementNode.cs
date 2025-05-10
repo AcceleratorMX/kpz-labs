@@ -1,4 +1,5 @@
 ﻿using Composite.Iterator;
+using Composite.State;
 
 namespace Composite;
 
@@ -9,24 +10,15 @@ public class LightElementNode : LightNode
     private string ClosingType { get; }
     private List<string> CssClasses { get; }
     public List<LightNode> Children { get; }
+    
+    public IElementState State { get; private set; } = new VisibleState();
 
     public override string OuterHtml
     {
         get
         {
-            var result = $"<{TagName} class=\"{string.Join(" ", CssClasses)}\" display=\"{DisplayType}\">";
-            
-            if (ClosingType == "closing")
-            {
-                result += InnerHtml;
-                result += $"</{TagName}>";
-            }
-            else
-            {
-                result = $"<{TagName} class=\"{string.Join(" ", CssClasses)}\" display=\"{DisplayType}\" />";
-            }
-            
-            return result;
+            var rawHtml = GenerateRawHtml();
+            return State.ModifyOuterHtml(this, rawHtml);
         }
     }
 
@@ -34,8 +26,23 @@ public class LightElementNode : LightNode
     {
         get
         {
-            return Children.Aggregate("", (current, child) => current + child.Render());
+            return Children.Aggregate("", (current, child) => current + child.OuterHtml);
         }
+    }
+    
+    private string GenerateRawHtml()
+    {
+        var result = $"<{TagName} class=\"{string.Join(" ", CssClasses)}\" display=\"{DisplayType}\">";
+        if (ClosingType == "closing")
+        {
+            result += InnerHtml;
+            result += $"</{TagName}>";
+        }
+        else
+        {
+            result = $"<{TagName} class=\"{string.Join(" ", CssClasses)}\" display=\"{DisplayType}\" />";
+        }
+        return result;
     }
     
     public LightElementNode(string tagName, string displayType, string closingType, List<string> cssClasses)
@@ -92,4 +99,10 @@ public class LightElementNode : LightNode
     public ILightNodeIterator CreateDepthFirstIterator() => new DepthFirstIterator(this);
 
     public ILightNodeIterator CreateBreadthFirstIterator() => new BreadthFirstIterator(this);
+    
+    public void SetState(IElementState state)
+    {
+        State = state;
+        Console.WriteLine($"State of <{TagName}> changed to {state.GetType().Name}.");
+    }
 }
