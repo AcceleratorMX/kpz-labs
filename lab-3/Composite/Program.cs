@@ -1,4 +1,5 @@
 ﻿using Composite;
+using Composite.Command;
 using Composite.State;
 
 var header = new LightElementNode("h1", "block", "closing", ["header"]);
@@ -62,16 +63,27 @@ page.AddChild(image);
 //     }
 // }
 
-page.SetState(new HiddenState());
-Console.WriteLine("\n=== After Hidden State ===");
+// page.SetState(new HiddenState());
+// Console.WriteLine("\n=== After Hidden State ===");
+// Console.WriteLine(page.OuterHtml);
+//
+// page.SetState(new DisabledState());
+// Console.WriteLine("\n=== After Disabled State ===");
+// Console.WriteLine(page.OuterHtml);
+//
+// page.SetState(new VisibleState());
+// Console.WriteLine("\n=== After Visible State ===");
+// Console.WriteLine(page.OuterHtml);
+
+var commandManager = new CommandManager();
+var newParagraph = new LightTextNode("New paragraph content");
+var addCommand = new AddChildCommand(page, newParagraph);
+commandManager.ExecuteCommand(addCommand);
+Console.WriteLine("\n=== After Adding Paragraph ===");
 Console.WriteLine(page.OuterHtml);
 
-page.SetState(new DisabledState());
-Console.WriteLine("\n=== After Disabled State ===");
-Console.WriteLine(page.OuterHtml);
-
-page.SetState(new VisibleState());
-Console.WriteLine("\n=== After Visible State ===");
+commandManager.UndoLastCommand();
+Console.WriteLine("\n=== After Undo ===");
 Console.WriteLine(page.OuterHtml);
 
 // Console.WriteLine("\n=== Page rendering ===");
@@ -86,8 +98,8 @@ Console.WriteLine(page.OuterHtml);
 // Console.WriteLine("\n=== Removing list ===");
 // page.RemoveChild(list);
 //
-Console.WriteLine("\n=== Page structure after removing list ===");
-PrintNode(page, 0);
+// Console.WriteLine("\n=== Page structure after removing list ===");
+// PrintNode(page, 0);
 return;
 
 
