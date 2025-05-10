@@ -32,4 +32,6 @@ public class LightTextNode : LightNode
     {
         Console.WriteLine($"TextNode removed: {_text}");
     }
+
+    public override List<LightNode> GetChildren() => [];
 }

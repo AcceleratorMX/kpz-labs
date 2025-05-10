@@ -1,4 +1,6 @@
-﻿namespace Composite;
+﻿using Composite.Iterator;
+
+namespace Composite;
 
 public class LightElementNode : LightNode
 {
@@ -84,4 +86,10 @@ public class LightElementNode : LightNode
             RemoveChild(child);
         }
     }
+    
+    public override List<LightNode> GetChildren() => Children;
+    
+    public ILightNodeIterator CreateDepthFirstIterator() => new DepthFirstIterator(this);
+
+    public ILightNodeIterator CreateBreadthFirstIterator() => new BreadthFirstIterator(this);
 }
