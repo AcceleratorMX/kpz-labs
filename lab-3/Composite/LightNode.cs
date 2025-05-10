@@ -22,4 +22,6 @@ public abstract class LightNode
     {
         OnRemoved();
     }
+    
+    public virtual List<LightNode> GetChildren() => [];
 }

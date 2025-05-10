@@ -29,6 +29,38 @@ page.AddChild(paragraph);
 page.AddChild(list);
 page.AddChild(image);
 
+Console.WriteLine("\n=== DFS ===");
+var depthIterator = page.CreateDepthFirstIterator();
+while (depthIterator.HasNext())
+{
+    var node = depthIterator.Next();
+    switch (node)
+    {
+        case LightElementNode elementNode:
+            Console.WriteLine($"Element: <{elementNode.TagName}>");
+            break;
+        case LightTextNode textNode:
+            Console.WriteLine($"Text: {textNode.OuterHtml}");
+            break;
+    }
+}
+
+Console.WriteLine("\n=== BFS ===");
+var breadthIterator = page.CreateBreadthFirstIterator();
+while (breadthIterator.HasNext())
+{
+    var node = breadthIterator.Next();
+    switch (node)
+    {
+        case LightElementNode elementNode:
+            Console.WriteLine($"Element: <{elementNode.TagName}>");
+            break;
+        case LightTextNode textNode:
+            Console.WriteLine($"Text: {textNode.OuterHtml}");
+            break;
+    }
+}
+
 Console.WriteLine("\n=== Page rendering ===");
 var renderedPage = page.Render();
 
