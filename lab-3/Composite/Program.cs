@@ -1,4 +1,5 @@
 ﻿using Composite;
+using Composite.State;
 
 var header = new LightElementNode("h1", "block", "closing", ["header"]);
 header.AddChild(new LightTextNode("Welcome to LightHTML!"));
@@ -29,50 +30,62 @@ page.AddChild(paragraph);
 page.AddChild(list);
 page.AddChild(image);
 
-Console.WriteLine("\n=== DFS ===");
-var depthIterator = page.CreateDepthFirstIterator();
-while (depthIterator.HasNext())
-{
-    var node = depthIterator.Next();
-    switch (node)
-    {
-        case LightElementNode elementNode:
-            Console.WriteLine($"Element: <{elementNode.TagName}>");
-            break;
-        case LightTextNode textNode:
-            Console.WriteLine($"Text: {textNode.OuterHtml}");
-            break;
-    }
-}
+// Console.WriteLine("\n=== DFS ===");
+// var depthIterator = page.CreateDepthFirstIterator();
+// while (depthIterator.HasNext())
+// {
+//     var node = depthIterator.Next();
+//     switch (node)
+//     {
+//         case LightElementNode elementNode:
+//             Console.WriteLine($"Element: <{elementNode.TagName}>");
+//             break;
+//         case LightTextNode textNode:
+//             Console.WriteLine($"Text: {textNode.OuterHtml}");
+//             break;
+//     }
+// }
 
-Console.WriteLine("\n=== BFS ===");
-var breadthIterator = page.CreateBreadthFirstIterator();
-while (breadthIterator.HasNext())
-{
-    var node = breadthIterator.Next();
-    switch (node)
-    {
-        case LightElementNode elementNode:
-            Console.WriteLine($"Element: <{elementNode.TagName}>");
-            break;
-        case LightTextNode textNode:
-            Console.WriteLine($"Text: {textNode.OuterHtml}");
-            break;
-    }
-}
+// Console.WriteLine("\n=== BFS ===");
+// var breadthIterator = page.CreateBreadthFirstIterator();
+// while (breadthIterator.HasNext())
+// {
+//     var node = breadthIterator.Next();
+//     switch (node)
+//     {
+//         case LightElementNode elementNode:
+//             Console.WriteLine($"Element: <{elementNode.TagName}>");
+//             break;
+//         case LightTextNode textNode:
+//             Console.WriteLine($"Text: {textNode.OuterHtml}");
+//             break;
+//     }
+// }
 
-Console.WriteLine("\n=== Page rendering ===");
-var renderedPage = page.Render();
+page.SetState(new HiddenState());
+Console.WriteLine("\n=== After Hidden State ===");
+Console.WriteLine(page.OuterHtml);
 
-Console.WriteLine("\n=== OuterHTML ===");
-Console.WriteLine(renderedPage);
+page.SetState(new DisabledState());
+Console.WriteLine("\n=== After Disabled State ===");
+Console.WriteLine(page.OuterHtml);
 
-Console.WriteLine("\n=== InnerHTML ===");
-Console.WriteLine(page.InnerHtml);
+page.SetState(new VisibleState());
+Console.WriteLine("\n=== After Visible State ===");
+Console.WriteLine(page.OuterHtml);
 
-Console.WriteLine("\n=== Removing list ===");
-page.RemoveChild(list);
+// Console.WriteLine("\n=== Page rendering ===");
+// var renderedPage = page.Render();
 
+// Console.WriteLine("\n=== OuterHTML ===");
+// Console.WriteLine(renderedPage);
+//
+// Console.WriteLine("\n=== InnerHTML ===");
+// Console.WriteLine(page.InnerHtml);
+
+// Console.WriteLine("\n=== Removing list ===");
+// page.RemoveChild(list);
+//
 Console.WriteLine("\n=== Page structure after removing list ===");
 PrintNode(page, 0);
 return;
