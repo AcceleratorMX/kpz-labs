@@ -1,4 +1,7 @@
 ﻿using Composite;
+using Composite.Command;
+using Composite.State;
+using Composite.Visitor;
 
 var header = new LightElementNode("h1", "block", "closing", ["header"]);
 header.AddChild(new LightTextNode("Welcome to LightHTML!"));
@@ -29,15 +32,82 @@ page.AddChild(paragraph);
 page.AddChild(list);
 page.AddChild(image);
 
-Console.WriteLine("=== OuterHTML ===");
-Console.WriteLine(page.OuterHtml);
+// Console.WriteLine("\n=== DFS ===");
+// var depthIterator = page.CreateDepthFirstIterator();
+// while (depthIterator.HasNext())
+// {
+//     var node = depthIterator.Next();
+//     switch (node)
+//     {
+//         case LightElementNode elementNode:
+//             Console.WriteLine($"Element: <{elementNode.TagName}>");
+//             break;
+//         case LightTextNode textNode:
+//             Console.WriteLine($"Text: {textNode.OuterHtml}");
+//             break;
+//     }
+// }
 
-Console.WriteLine("\n=== InnerHTML ===");
-Console.WriteLine(page.InnerHtml);
+// Console.WriteLine("\n=== BFS ===");
+// var breadthIterator = page.CreateBreadthFirstIterator();
+// while (breadthIterator.HasNext())
+// {
+//     var node = breadthIterator.Next();
+//     switch (node)
+//     {
+//         case LightElementNode elementNode:
+//             Console.WriteLine($"Element: <{elementNode.TagName}>");
+//             break;
+//         case LightTextNode textNode:
+//             Console.WriteLine($"Text: {textNode.OuterHtml}");
+//             break;
+//     }
+// }
 
-Console.WriteLine("\n=== Full Page Structure ===");
-PrintNode(page, 0);
+// page.SetState(new HiddenState());
+// Console.WriteLine("\n=== After Hidden State ===");
+// Console.WriteLine(page.OuterHtml);
+//
+// page.SetState(new DisabledState());
+// Console.WriteLine("\n=== After Disabled State ===");
+// Console.WriteLine(page.OuterHtml);
+//
+// page.SetState(new VisibleState());
+// Console.WriteLine("\n=== After Visible State ===");
+// Console.WriteLine(page.OuterHtml);
+
+// var commandManager = new CommandManager();
+// var newParagraph = new LightTextNode("New paragraph content");
+// var addCommand = new AddChildCommand(page, newParagraph);
+// commandManager.ExecuteCommand(addCommand);
+// Console.WriteLine("\n=== After Adding Paragraph ===");
+// Console.WriteLine(page.OuterHtml);
+//
+// commandManager.UndoLastCommand();
+// Console.WriteLine("\n=== After Undo ===");
+// Console.WriteLine(page.OuterHtml);
+
+var counter = new NodeCounterVisitor();
+page.Accept(counter);
+Console.WriteLine($"\n=== Node Count ===");
+Console.WriteLine($"Elements: {counter.ElementCount}, Text Nodes: {counter.TextCount}");
+
+// Console.WriteLine("\n=== Page rendering ===");
+// var renderedPage = page.Render();
+
+// Console.WriteLine("\n=== OuterHTML ===");
+// Console.WriteLine(renderedPage);
+//
+// Console.WriteLine("\n=== InnerHTML ===");
+// Console.WriteLine(page.InnerHtml);
+
+// Console.WriteLine("\n=== Removing list ===");
+// page.RemoveChild(list);
+//
+// Console.WriteLine("\n=== Page structure after removing list ===");
+// PrintNode(page, 0);
 return;
+
 
 static void PrintNode(LightNode node, int indent)
 {
