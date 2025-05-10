@@ -29,15 +29,22 @@ page.AddChild(paragraph);
 page.AddChild(list);
 page.AddChild(image);
 
-Console.WriteLine("=== OuterHTML ===");
-Console.WriteLine(page.OuterHtml);
+Console.WriteLine("\n=== Page rendering ===");
+var renderedPage = page.Render();
+
+Console.WriteLine("\n=== OuterHTML ===");
+Console.WriteLine(renderedPage);
 
 Console.WriteLine("\n=== InnerHTML ===");
 Console.WriteLine(page.InnerHtml);
 
-Console.WriteLine("\n=== Full Page Structure ===");
+Console.WriteLine("\n=== Removing list ===");
+page.RemoveChild(list);
+
+Console.WriteLine("\n=== Page structure after removing list ===");
 PrintNode(page, 0);
 return;
+
 
 static void PrintNode(LightNode node, int indent)
 {
